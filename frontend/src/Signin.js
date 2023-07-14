@@ -1,19 +1,13 @@
 import React from 'react';
 import './signin.css';
+import useForm from './useForm';
 import { Link } from 'react-router-dom';
 
 const Signin = ({ onLogin }) => {
-    console.log(onLogin)
-    const [enteredValues, setEnteredValues] = React.useState({});
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setEnteredValues({
-            ...enteredValues,
-            [name]: value,
-        });
-    }
+    const { enteredValues, errors, handleChange, isFormValid } = useForm();
 
+ 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!enteredValues.email || !enteredValues.password) {
@@ -25,8 +19,8 @@ const Signin = ({ onLogin }) => {
     return (
         <div className="auth">
             <h2 className="auth__title">Вход</h2>
-            <form className="auth__form" noValidate onSubmit={handleSubmit}>
-                <input
+            <form className="auth__form"  onSubmit={handleSubmit}>
+                <input  className='login__input'
                     minLength="3"
                     maxLength="24"
                     type="email"
@@ -37,6 +31,7 @@ const Signin = ({ onLogin }) => {
                     onChange={handleChange}
                 />
                 <input
+                    className='login__input'
                     type="password"
                     minLength="3"
                     maxLength="24"
@@ -46,9 +41,9 @@ const Signin = ({ onLogin }) => {
                     value={enteredValues.password || ""}
                     onChange={handleChange}
                 />
-                <button type="submit">Войти</button>
+                <button disabled={!isFormValid ? true: false } className='login__button' type='submit'>Войти</button>
             </form>
-            <Link to="/signup" className="auth__login-hint">
+            <Link to="/" className="auth__login-hint">
                 Зарегистрироваться
             </Link>
         </div>

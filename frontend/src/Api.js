@@ -33,13 +33,11 @@ export const login = ({ email, password }) => {
             email: email,
             password: password,
         }),
-    }).then((res) => {
-        res.json().then(data => {
-            headers["authorization"] = data
-        })
-
-    });
+    })
+        .then((res) => response(res));
+   
 };
+
 
 
 export const getUsers = (jwt) => {

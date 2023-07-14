@@ -1,18 +1,13 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import './signup.css';
+import useForm from './useForm';
 
 const Register = ({ onRegister }) => {
 
-    const [enteredValues, setEnteredValues] = React.useState({});
+    const { enteredValues, errors, handleChange, isFormValid } = useForm();
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setEnteredValues({
-            ...enteredValues,
-            [name]: value,
-        });
-    }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -27,6 +22,8 @@ const Register = ({ onRegister }) => {
                     id="email"
                     name="email"
                     type="email"
+                    minLength="3"
+                    maxLength="24"
                     placeholder="Email"
                     value={enteredValues.email || ""}
                     onChange={handleChange}
@@ -35,12 +32,13 @@ const Register = ({ onRegister }) => {
                     id="password"
                     name="password"
                     type="password"
-                    minLength="8"
+                    minLength="3"
+                    maxLength="24"
                     placeholder="Пароль"
                     value={enteredValues.password || ""}
                     onChange={handleChange}
                 />
-                <button type="submit">Зарегистрироваться</button>
+                <button disabled={!isFormValid ? true: false } className='login__button' type='submit'>Зарегистрироваться</button>
             </form>
             <Link to="/signin" className="auth__login-hint">
                 Уже зарегистрированы? Войти
